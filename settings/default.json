@@ -9,19 +9,15 @@
     "image_format": "jpeg",
     "jpeg_quality": 90,
     "constraints": {
-      "mandatory": {
-        "minWidth": 1920, 
-        "minHeight": 1080
-      },
       "optional": [{
-        "sourceId": "163cefb5bef5bcc594c2752fd9674e21581a27de503fa5d3799bd7e134edd219"
+        "sourceId": "86cd033310bb6332b75884cd78e71e622298748a1306248a0367961d2224aacf"
       }]
     }
   },
   "starport": {
     "server": {
-      "address": "localhost",
-      "port": 8888
+      "address": "spacebro.space",
+      "port": 3333
     },
     "computer": "electronic-sheep-default",
     "channel": "starport"
