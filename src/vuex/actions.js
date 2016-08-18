@@ -1,7 +1,7 @@
 const webcam = require('webcamjs')
 const fs = require('fs')
-const path = require('path');
-
+const path = require('path')
+const os = require("os")
 
 import settings from './../lib/settings.js'
 const starport = require('starport').default
@@ -16,7 +16,7 @@ export const takeSnap = function ({ dispatch, state }, data) {
     dispatch('ANS_TAKE_SNAP', dataURL)
 
     let base64Data = dataURL.replace(/^data:image\/jpeg;base64,/, "")
-    let filename = data.shortId + '-' + settings.flux + '.jpg'
+    let filename = os.hostname() + '-' + data.shortId + '-' + settings.flux + '.jpg'
     let file = path.join(settings.imageFolder, filename)
     console.log('file:', file)
     fs.writeFile(file, base64Data, 'base64', function(err) {
@@ -26,7 +26,7 @@ export const takeSnap = function ({ dispatch, state }, data) {
         let msg = {
           src: 'http://' + path.join(settings.server.host + ':' + settings.server.port, filename),
           index: settings.flux,
-          album: data.shortId
+          album_name: data.shortId
         }
         starport.emit('image-saved', msg)
       }
