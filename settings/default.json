@@ -17,5 +17,13 @@
         "sourceId": "a2b9d2cabdc4b344be5cf58b901c76151ae416b9f12c9ecb314816d287afb2be"
       }]
     }
+  },
+  "starport": {
+    "server": {
+      "address": "localhost",
+      "port": 8888
+    },
+    "computer": "electronic-sheep-2",
+    "channel": "starport"
   }
 }
