@@ -21,7 +21,10 @@ import store from 'src/vuex/store'
 import {getDataUrl} from 'src/vuex/getters'
 import {takeSnap} from 'src/vuex/actions'
 
+console.log('app.vue')
+
 const webcam = require('webcamjs')
+const starport = require('starport').default
 
 export default {
   name: 'App',
@@ -36,6 +39,11 @@ export default {
   },
   ready() {
     webcam.attach( '#live_canvas' )
+
+    starport.on('snap', () => {
+      console.log('starport::snap')
+      this.takeSnap()
+    })
   }
 }
 </script>
