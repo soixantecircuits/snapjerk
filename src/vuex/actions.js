@@ -1,6 +1,8 @@
 const webcam = require('webcamjs')
 const fs = require('fs')
 
+import settings from './../lib/settings.js'
+
 export const takeSnap = function ({ dispatch, state }) {
   dispatch('ASK_TAKE_SNAP')
 
@@ -9,7 +11,7 @@ export const takeSnap = function ({ dispatch, state }) {
     dispatch('ANS_TAKE_SNAP', dataURL)
 
     let base64Data = dataURL.replace(/^data:image\/jpeg;base64,/, "")
-    fs.writeFile("/tmp/out.jpg", base64Data, 'base64', function(err) {
+    fs.writeFile(settings.file, base64Data, 'base64', function(err) {
       console.log(err)
     })
   })
