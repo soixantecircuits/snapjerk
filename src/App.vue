@@ -3,16 +3,10 @@
     <button type='button' @click='takeSnap'>
       <span>SNAP</span>
     </button>
+    <!--select id="audioSelect"></select-->
+    <!--select id="videoSelect"></select-->
     <div id="live_canvas">LIVE CAMERA</div>
     <img id="still_frame" v-bind:src="getDataUrl">
-    <!--
-    <div id="live_wrapper">
-      <div id="live_canvas">LIVE CAMERA</div>
-    </div>
-    <div id="still_wrapper">
-      <img id="still_frame">
-    </div>
-    -->
   </div>
 </template>
 
@@ -36,14 +30,56 @@ export default {
     actions: {
       takeSnap
     }
-  },
+  },/*
+  methods: {
+    select(id) {
+      let cameraOptions 
+      cameraOptions = Object.assign({}, settings.cameraOptions)
+      cameraOptions.constraints.optional = [{
+        "sourceId": id
+      }]
+      webcam.set(cameraOptions)
+      webcam.attach( '#live_canvas' )
+    }
+  },*/
   ready() {
     webcam.attach( '#live_canvas' )
 
     starport.on('snap', () => {
       console.log('starport::snap')
-      this.takeSnap()
+      vm.takeSnap()
     })
+
+    /*
+    let audioSelect = document.getElementById('audioSelect')
+    let videoSelect = document.getElementById('videoSelect')
+
+    navigator.mediaDevices.enumerateDevices()
+      .then((devices) => {
+        devices.forEach((device) => {
+          var option = document.createElement('option');
+          option.value = device.deviceId;
+          if (device.kind === 'audioinput') {
+            option.text = device.label || 'microphone ' + (audioSelect.length + 1);
+            audioSelect.appendChild(option);
+          } else if (device.kind === 'videoinput') {
+            option.text = device.label || 'camera ' + (videoSelect.length + 1);
+            videoSelect.appendChild(option);
+          } else {
+            console.log('Some other kind of source: ', device);
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err.name + ": " + err.message)
+      })
+
+    let vm = this
+
+    videoSelect.addEventListener("change", function() {
+      console.log(videoSelect.value)
+      vm.select(videoSelect.value)
+    });*/
   }
 }
 </script>
@@ -90,29 +126,4 @@ button {
   left: 10px;
 }
 
-/*
-#app {
-  color: #2c3e50;
-  margin-top: -100px;
-  max-width: 600px;
-  font-family: Source Sans Pro, Helvetica, sans-serif;
-  text-align: center;
-  position: relative;
-}
-
-#app a {
-  color: #42b983;
-  text-decoration: none;
-}
-
-#app > div {
-  background: #EEE;
-  position: absolute;
-  width: 100%;
-}
-
-.logo {
-  width: 100px;
-  height: 100px
-}*/
 </style>
