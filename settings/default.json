@@ -2,6 +2,10 @@
   "name": "Default settings file",
   "flux": 1,
   "imageFolder": "/tmp/",
+  "server": {
+    "host": "localhost",
+    "port": 4000
+  },
   "cameraOptions": {
     "width": 1280,
     "height": 720,
