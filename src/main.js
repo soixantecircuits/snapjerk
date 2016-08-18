@@ -60,6 +60,21 @@ starport.connect({
   unpackers: [{ handler: data => console.log('<=', data) }]
 })
 
+// - static server
+
+var http = require('http')
+var serveStatic = require('serve-static')
+
+// Serve up public/ftp folder
+var serve = serveStatic(settings.imageFolder)
+
+// Create server
+var server = http.createServer(function (req, res) {
+  console.log('create server cb', req, res)
+  var done = finalhandler(req, res)
+  serve(req, res, done)
+})
+
 // - go  
 
 router.start(App, 'body')
