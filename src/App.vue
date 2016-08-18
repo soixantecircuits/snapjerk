@@ -45,9 +45,9 @@ export default {
   ready() {
     webcam.attach( '#live_canvas' )
 
-    starport.on('snap', () => {
-      console.log('starport::snap')
-      vm.takeSnap()
+    starport.on('snap', (data) => {
+      console.log('starport::snap', data)
+      this.takeSnap(data)
     })
 
     /*
