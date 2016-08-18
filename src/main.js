@@ -10,6 +10,18 @@ const App = Vue.extend({})
 // - webcam initialization
 
 const webcam = require('webcamjs')
+
+webcam.on( 'load', function() {
+  console.log('library is loaded')
+})
+
+webcam.on( 'live', function() {
+  console.log('camera is live, showing preview image (and user has allowed access)')
+})
+
+webcam.on( 'error', function(err) {
+  console.log('an error occurred ', err)
+})
 webcam.set(settings.cameraOptions)
 
 listDevices()
@@ -23,8 +35,8 @@ function listDevices() {
   navigator.mediaDevices.enumerateDevices()
   .then((devices) => {
     devices.forEach((device) => {
-      console.log(device.kind + ": " + device.label +
-                  " id = " + device.deviceId)
+      // console.log(device.kind + ": " + device.label + " id = " + device.deviceId)
+      console.log("list devices: ", device)
     })
   })
   .catch((err) => {
@@ -47,8 +59,6 @@ starport.connect({
   packers: [{ handler: data => console.log('=>', data) }],
   unpackers: [{ handler: data => console.log('<=', data) }]
 })
-
-console.log('main.js')
 
 // - go  
 
