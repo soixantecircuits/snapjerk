@@ -1,7 +1,20 @@
 {
   "name": "Default settings file",
-  "something": 10,
-  "count": {
-    "default": 5
+  "cameraOptions": {
+    "width": 1280,
+    "height": 720,
+    "dest_width": 1920,
+    "dest_height": 1080,
+    "image_format": "jpeg",
+    "jpeg_quality": 90,
+    "constraints": {
+      "mandatory": {
+        "minWidth": 1920, 
+        "minHeight": 1080
+      },
+      "optional": [{
+        "sourceId": "a2b9d2cabdc4b344be5cf58b901c76151ae416b9f12c9ecb314816d287afb2be"
+      }]
+    }
   }
 }
