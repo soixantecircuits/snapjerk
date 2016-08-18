@@ -1,6 +1,6 @@
 {
   "name": "Default settings file",
-  "file": "/tmp/camsync.jpg",
+  "file": "/tmp/camsync3.jpg",
   "cameraOptions": {
     "width": 1280,
     "height": 720,
@@ -14,7 +14,7 @@
         "minHeight": 1080
       },
       "optional": [{
-        "sourceId": "163cefb5bef5bcc594c2752fd9674e21581a27de503fa5d3799bd7e134edd219"
+        "sourceId": "a2e157be7776d4b1f4046fbf86f926dbe6962350adee640720ccb48ef92a67e8"
       }]
     }
   },
@@ -23,7 +23,7 @@
       "address": "localhost",
       "port": 8888
     },
-    "computer": "electronic-sheep-default",
+    "computer": "electronic-sheep-3",
     "channel": "starport"
   }
 }
