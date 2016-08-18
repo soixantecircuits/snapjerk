@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import App from './App'
-import Foo from './components/Foo'
-import Bar from './components/Bar'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
@@ -14,17 +12,7 @@ const router = new VueRouter({
 router.map({
   '/': {
     name: 'App',
-    component: App,
-    subRoutes: {
-      '/foo': {
-        name: 'Foo',
-        component: Foo
-      },
-      '/bar': {
-        name: 'Bar',
-        component: Bar
-      }
-    }
+    component: App
   }
 })
 
