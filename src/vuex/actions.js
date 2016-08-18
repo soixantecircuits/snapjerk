@@ -1,7 +1,8 @@
-export const decrementCounter = function ({ dispatch, state }) {
-  dispatch('DECREMENT', 1)
-}
+const webcam   = require('webcamjs')
 
-export const incrementCounter = function ({ dispatch, state }) {
-  dispatch('INCREMENT', 1)
+export const takeSnap = function ({ dispatch, state }) {
+  dispatch('ASK_TAKE_SNAP')
+  webcam.snap((dataURL) => {
+    dispatch('ANS_TAKE_SNAP', dataURL)
+  })
 }

@@ -9,16 +9,18 @@ Vue.use(Vuex)
 // Create an object to hold the initial state when
 // the app starts up
 const state = {
-  count: settings.count.default
+  dataUrl: '', // settings.count.default
+  free: true
 }
 
 // Create an object storing various mutations. We will write the mutation
 const mutations = {
-  DECREMENT (state, amount) {
-    state.count = state.count - amount
+  ASK_TAKE_SNAP (state) {
+    state.free = false
   },
-  INCREMENT (state, amount) {
-    state.count = state.count + amount
+  ANS_TAKE_SNAP (state, dataUrl) {
+    state.dataUrl = dataUrl
+    state.free = true
   }
 }
 
