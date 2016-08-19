@@ -7,7 +7,7 @@ import settings from 'src/lib/settings.js'
 const webcam = require('webcamjs')
 
 
-var snap = function (data, callback) {
+const snap = function (data, callback) {
 	webcam.snap((dataURL) => {
     data.dataURL = dataURL
 		let base64Data = dataURL.replace(/^data:image\/jpeg;base64,/, "")
@@ -33,7 +33,7 @@ var snap = function (data, callback) {
 	})
 }
 
-var actionList = [
+const actionList = [
   {
     name: 'shoot',
     trigger: function (data) {
@@ -49,10 +49,14 @@ var actionList = [
   }
 ]
 
-spacebroClient.iKnowMyMaster(settings.spacebro.server.address, settings.spacebro.server.port)
-spacebroClient.registerToMaster(actionList, settings.spacebro.computer)
+const init = function () {
+  console.log('initialize spacebro')
+  spacebroClient.iKnowMyMaster(settings.spacebro.server.address, settings.spacebro.server.port)
+  spacebroClient.registerToMaster(actionList, settings.spacebro.computer)
+}
 
 export default {
-  snap: snap
+  snap,
+  init
 }
 

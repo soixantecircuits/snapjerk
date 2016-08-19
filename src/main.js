@@ -3,12 +3,18 @@ import 'gsap'
 import Vue from 'vue'
 import router from './router'
 import './transitions'
+
 import settings from 'src/lib/settings.js'
-import {listDevices, getDevicesMap} from 'src/lib/camUtils.js'
+import camUtils from 'src/lib/camUtils.js'
+import sbc from 'src/lib/spacebro-client.js'
+
 const getPort = require('get-port')
 
 const App = Vue.extend({})
 
+// - spacebro client
+
+sbc.init()
 
 // - static server
 
@@ -51,8 +57,8 @@ webcam.on( 'error', function(err) {
   console.log('an error occurred ', err)
 })
 
-listDevices()
-getDevicesMap(onDeviceMapCreated)
+camUtils.listDevices()
+camUtils.getDevicesMap(onDeviceMapCreated)
 
 function onDeviceMapCreated(err, res) {
   // console.log(res, err, settings.device, res[settings.device])

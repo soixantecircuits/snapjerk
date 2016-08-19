@@ -1,7 +1,7 @@
 /**
  *
  */
-export const listDevices = () => {
+const listDevices = () => {
   if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
     console.log("enumerateDevices() not supported.")
     return
@@ -23,7 +23,7 @@ export const listDevices = () => {
  *
  * callack(err, res)
  */
-export const getDevicesMap = (callback) => {
+const getDevicesMap = (callback) => {
   if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
     console.log("enumerateDevices() not supported.")
     return
@@ -48,4 +48,9 @@ export const getDevicesMap = (callback) => {
     .catch((err) => {
       typeof callback === 'function' && callback(err, null)
     })
+}
+
+export default {
+  listDevices,
+  getDevicesMap
 }
