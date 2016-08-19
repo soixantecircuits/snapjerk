@@ -40,6 +40,7 @@ var snap = function (data, callback) {
 		typeof callback === 'function' && callback(null, data)
 	})
 }
+
 var spacebroClient = require('spacebro-client')
 var actionList = [
   {
@@ -56,12 +57,14 @@ var actionList = [
     }
   }
 ]
+
 spacebroClient.iKnowMyMaster(settings.spacebro.server.address, settings.spacebro.server.port)
 spacebroClient.registerToMaster(actionList, settings.spacebro.computer)
 
 export default {
   snap: snap
 }
+
 // - static server
 
 var finalhandler = require('finalhandler')
