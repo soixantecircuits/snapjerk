@@ -1,15 +1,4 @@
 {
-  "debug": true,
-  "port": 3000,
-  "device": "/dev/video0",
-  "camera": {
-    "width": 1920,
-    "height": 1080,
-    "quality": 95,
-    "filepath": "/tmp/",
-    "filename": "camsync_triggerer",
-    "output": "jpeg"
-  },
   "starport": {
     "server": {
       "address": "spacebro.space",

@@ -1,6 +1,11 @@
 {
   "name": "Default settings file",
+  "cameraNumber": 1,
   "file": "/tmp/camsync1.jpg",
+  "server": {
+    "host": "",
+    "port": 4000
+  },
   "cameraOptions": {
     "width": 1280,
     "height": 720,

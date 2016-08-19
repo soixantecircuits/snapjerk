@@ -1,7 +1,7 @@
 const webcam = require('webcamjs')
 const fs = require('fs')
-const path = require('path');
-
+const path = require('path')
+const os = require("os")
 
 import settings from './../lib/settings.js'
 import main from './../main.js'

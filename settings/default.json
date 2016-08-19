@@ -1,9 +1,9 @@
 {
   "name": "Default settings file",
-  "flux": 1,
+  "cameraNumber": 1,
   "imageFolder": "/tmp/",
   "server": {
-    "host": "localhost",
+    "host": "",
     "port": 4000
   },
   "cameraOptions": {

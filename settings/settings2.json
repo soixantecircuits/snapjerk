@@ -1,5 +1,6 @@
 {
   "name": "Default settings file",
+  "cameraNumber": 2,
   "file": "/tmp/camsync2.jpg",
   "cameraOptions": {
     "width": 1280,

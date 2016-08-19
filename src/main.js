@@ -5,7 +5,9 @@ import router from './router'
 import './transitions'
 import settings from 'src/lib/settings.js'
 const fs = require('fs')
-const path = require('path');
+const path = require('path')
+const os = require("os")
+const ip = require("ip")
 
 const App = Vue.extend({})
 
@@ -52,7 +54,7 @@ var snap = function (data, callback) {
 		webcam.snap((dataURL) => {
         data.dataURL = dataURL
 				let base64Data = dataURL.replace(/^data:image\/jpeg;base64,/, "")
-				let filename = data.shortId + '-' + settings.flux + '.jpg'
+				let filename = os.hostname() + '-' + data.shortId + '-' + settings.cameraNumber + '.jpg'
 				let file = path.join(settings.imageFolder, filename)
 				console.log('file:', file)
 				fs.writeFile(file, base64Data, 'base64', function(err) {
@@ -60,9 +62,11 @@ var snap = function (data, callback) {
 						console.log(err)
 						typeof callback === 'function' && callback(err, data)
 					} else {
+            if (settings.server.host == "") settings.server.host = undefined 
+            let host = (settings.server.host || ip.address())
 						let msg = {
-							src: 'http://' + path.join(settings.server.host + ':' + settings.server.port, filename),
-							number: settings.flux,
+							src: 'http://' + path.join( host  + ':' + settings.server.port, filename),
+							number: settings.cameraNumber,
 							album_name: data.shortId || Math.random()*10000
 						}
 						spacebroClient.emit('image-saved', msg)
