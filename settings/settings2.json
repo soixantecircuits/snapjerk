@@ -1,5 +1,5 @@
 {
-  "device": "dev/video1",
+  "cameraKernels": "1-1.5",
   "cameraNumber": 2,
   "cameraOptions": {
     "width": 1920,

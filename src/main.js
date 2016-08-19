@@ -62,9 +62,16 @@ camUtils.getDevicesMap(onDeviceMapCreated)
 
 function onDeviceMapCreated(err, res) {
   console.log(JSON.stringify(res), err)
-  if (res[settings.device]) {
-    let id = res[settings.device]
-    console.log('Selecting ' + settings.device + ' with id ' + id)
+  let foundcamera
+  if (settings.cameraPath) {
+		foundcamera = Array.from(res).find(x => x.path === settings.cameraPath)
+  }
+  if (settings.cameraKernels) {
+		foundcamera = Array.from(res).find(x => x.kernels === settings.cameraKernels)
+  }
+  if (foundcamera) {
+    let id = foundcamera.id
+    console.log('Selecting ' + settings.cameraPath + ' with id ' + id)
     let cameraOptions 
     cameraOptions = Object.assign({}, settings.cameraOptions)
     cameraOptions.constraints.optional = [{
@@ -73,7 +80,7 @@ function onDeviceMapCreated(err, res) {
     console.log(JSON.stringify(cameraOptions))
     webcam.set(cameraOptions)
   } else {
-    console.error('there is no flux for : ', settings.device)
+    console.error('there is no camera matching : ', settings.cameraPath || settings.cameraKernels)
   }
 
   // - go  

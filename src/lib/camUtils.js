@@ -1,3 +1,5 @@
+const exec = require('child_process').exec;
+
 /**
  *
  */
@@ -19,6 +21,30 @@ const listDevices = () => {
     })
 }
 
+const getKernels = (path) => {
+    return new Promise(
+        function (resolve, reject) {
+						exec('udevadm info --name '+ path +  ' --attribute-walk | grep KERNELS', (error, stdout, stderr) => {
+							if (error) {
+								reject(error); // failure
+								return
+							}
+							//console.log(`udevadm: ${stdout}`)
+							
+							var re = /KERNELS=="(\d-\d\.?\d?)"/i
+							var match = stdout.match(re)
+							//console.log("match: " + match)
+							if (match && match[1]) {
+								typeof callback === 'function' && callback(null, match[1])
+								resolve(match[1]); // success
+							} else {
+								typeof callback === 'function' && callback("KERNELS not found", null)
+								reject("KERNELS not found"); // failure
+							}
+						});
+        });
+}
+
 /**
  *
  * callack(err, res)
@@ -38,12 +64,26 @@ const getDevicesMap = (callback) => {
           ids.unshift(device.deviceId)
         }
       })
-
-      let map = {}
+      
+      let map = []
+      let promises = []
       ids.forEach((value, index) => {
-        map['/dev/video'+index] = value
+        let path = '/dev/video'+index
+        promises.push(getKernels(path))
       })
-      typeof callback === 'function' && callback(null, map)
+			Promise.all(promises)
+				.then((values) => {
+					ids.forEach((value, index) => {
+						let path = '/dev/video'+index
+						map.push( {
+							id: value,
+							path: path,
+							kernels: values[index]
+						})
+					})
+					typeof callback === 'function' && callback(null, map)
+				})
+
     })
     .catch((err) => {
       typeof callback === 'function' && callback(err, null)

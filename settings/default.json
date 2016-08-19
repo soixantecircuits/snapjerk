@@ -1,5 +1,5 @@
 {
-  "device": "dev/video1",
+  "cameraPath": "/dev/video1",
   "cameraNumber": 1,
   "imageFolder": "/tmp/",
   "server": {
