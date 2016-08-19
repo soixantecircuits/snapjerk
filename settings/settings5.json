@@ -1,4 +1,4 @@
 {
-  "device": "dev/video5",
+  "device": "/dev/video5",
   "cameraNumber": 5
 }
