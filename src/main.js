@@ -5,6 +5,7 @@ import router from './router'
 import './transitions'
 import settings from 'src/lib/settings.js'
 import {listDevices, getDevicesMap} from 'src/lib/camUtils.js'
+const getPort = require('get-port')
 
 const App = Vue.extend({})
 
@@ -19,13 +20,20 @@ var serveStatic = require('serve-static')
 var serve = serveStatic(settings.imageFolder)
 
 // Create server
+
 var server = http.createServer(function (req, res) {
   console.log('create server cb', req, res)
   var done = finalhandler(req, res)
   serve(req, res, done)
 })
-
-server.listen(settings.server.port)
+if (settings.server.port > 0 ) {
+  server.listen(settings.server.port)
+} else {
+  getPort().then(port => {
+    settings.server.port = port
+    server.listen(port)
+  });
+}
 
 // - webcam initialization
 
