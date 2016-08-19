@@ -4,7 +4,7 @@
   "imageFolder": "/tmp/",
   "server": {
     "host": "",
-    "port": 4000
+    "port": 0
   },
   "cameraOptions": {
     "width": 1280,
