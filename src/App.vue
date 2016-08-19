@@ -14,7 +14,6 @@
 import store from 'src/vuex/store'
 import {getDataUrl} from 'src/vuex/getters'
 import {takeSnap} from 'src/vuex/actions'
-import main from './main.js'
 
 console.log('app.vue')
 

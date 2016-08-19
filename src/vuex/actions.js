@@ -4,14 +4,14 @@ const path = require('path')
 const os = require("os")
 
 import settings from './../lib/settings.js'
-import main from './../main.js'
+import bro from './../lib/spacebro-client.js'
 
 export const takeSnap = function ({ dispatch, state }, data) {
   dispatch('ASK_TAKE_SNAP')
 
   console.log('datas: ', data.shortId)
 
-  main.snap(data, function(err, data) {
+  bro.snap(data, function(err, data) {
     dispatch('ANS_TAKE_SNAP', data.dataURL)
   })
 }
