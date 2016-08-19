@@ -43,12 +43,14 @@ webcam.on( 'error', function(err) {
   console.log('an error occurred ', err)
 })
 
+listDevices()
 getDevicesMap(onDeviceMapCreated)
 
 function onDeviceMapCreated(err, res) {
-  console.log(res, err)
+  // console.log(res, err, settings.device, res[settings.device])
   if (res[settings.device]) {
     let id = res[settings.device]
+    console.log('select device id :', id)
     let cameraOptions 
     cameraOptions = Object.assign({}, settings.cameraOptions)
     cameraOptions.constraints.optional = [{
