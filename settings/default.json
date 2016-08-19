@@ -1,5 +1,6 @@
 {
   "name": "Default settings file",
+  "device": "dev/video1",
   "cameraNumber": 1,
   "imageFolder": "/tmp/",
   "server": {
