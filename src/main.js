@@ -4,6 +4,8 @@ import Vue from 'vue'
 import router from './router'
 import './transitions'
 import settings from 'src/lib/settings.js'
+const fs = require('fs')
+const path = require('path');
 
 const App = Vue.extend({})
 
@@ -46,20 +48,51 @@ function listDevices() {
 
 // - spacebro initialization
 
-const portconfig = settings.starport
-const starport = require('starport').default
-
-starport.connect({
-  server: {
-    address: portconfig.server.address,
-    port: portconfig.server.port
+var snap = function (data, callback) {
+		webcam.snap((dataURL) => {
+        data.dataURL = dataURL
+				let base64Data = dataURL.replace(/^data:image\/jpeg;base64,/, "")
+				let filename = data.shortId + '-' + settings.flux + '.jpg'
+				let file = path.join(settings.imageFolder, filename)
+				console.log('file:', file)
+				fs.writeFile(file, base64Data, 'base64', function(err) {
+					if (err !== null) {
+						console.log(err)
+						typeof callback === 'function' && callback(err, data)
+					} else {
+						let msg = {
+							src: 'http://' + path.join(settings.server.host + ':' + settings.server.port, filename),
+							number: settings.flux,
+							album_name: data.shortId || Math.random()*10000
+						}
+						spacebroClient.emit('image-saved', msg)
+					}
+				})
+				typeof callback === 'function' && callback(null, data)
+			})
+}
+var spacebroClient = require('spacebro-client')
+var actionList = [
+  {
+    name: 'shoot',
+    trigger: function (data) {
+      console.log('shoot: ', data)
+			snap(data)
+    }
   },
-  computer: portconfig.computer,
-  channel: portconfig.channel,
-  packers: [{ handler: data => console.log('=>', data) }],
-  unpackers: [{ handler: data => console.log('<=', data) }]
-})
+  {
+    name: 'image-saved',
+    trigger: function (data) {
+      console.log('image-saved received: ', data)
+    }
+  }
+]
+spacebroClient.iKnowMyMaster(settings.spacebro.server.address, settings.spacebro.server.port)
+spacebroClient.registerToMaster(actionList, settings.spacebro.computer)
 
+export default {
+  snap: snap
+}
 // - static server
 
 var finalhandler = require('finalhandler')
@@ -81,3 +114,4 @@ server.listen(settings.server.port)
 // - go  
 
 router.start(App, 'body')
+

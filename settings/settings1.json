@@ -18,12 +18,11 @@
       }]
     }
   },
-  "starport": {
+  "spacebro": {
     "server": {
       "address": "localhost",
       "port": 8888
     },
-    "computer": "electronic-sheep-1",
-    "channel": "starport"
+    "computer": "electronic-sheep-1"
   }
 }

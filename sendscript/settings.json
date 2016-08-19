@@ -12,8 +12,8 @@
   },
   "starport": {
     "server": {
-      "address": "localhost",
-      "port": 8888
+      "address": "spacebro.space",
+      "port": 3333
     },
     "computer": "electronic-wolf",
     "channel": "starport"

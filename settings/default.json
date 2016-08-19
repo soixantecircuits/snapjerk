@@ -19,12 +19,11 @@
       }]
     }
   },
-  "starport": {
+  "spacebro": {
     "server": {
       "address": "spacebro.space",
       "port": 3333
     },
-    "computer": "electronic-sheep-default",
-    "channel": "starport"
+    "computer": "snapjerk"
   }
 }

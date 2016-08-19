@@ -14,11 +14,11 @@
 import store from 'src/vuex/store'
 import {getDataUrl} from 'src/vuex/getters'
 import {takeSnap} from 'src/vuex/actions'
+import main from './main.js'
 
 console.log('app.vue')
 
 const webcam = require('webcamjs')
-const starport = require('starport').default
 
 export default {
   name: 'App',
@@ -45,11 +45,12 @@ export default {
   ready() {
     webcam.attach( '#live_canvas' )
 
-    starport.on('snap', (data) => {
-      console.log('starport::snap', data)
+/*
+    main.spacebroClient.on('shoot', (data) => {
+      console.log('starport::shoot', data)
       this.takeSnap(data)
     })
-
+*/
     /*
     let audioSelect = document.getElementById('audioSelect')
     let videoSelect = document.getElementById('videoSelect')

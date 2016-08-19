@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "shortid": "^2.2.6",
+    "spacebro-client": "0.0.11",
     "starport": "git+https://github.com/brendaoud/starport.git"
   }
 }
