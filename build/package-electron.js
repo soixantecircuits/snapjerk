@@ -9,6 +9,12 @@ program
     `Package destination platform. Default to '${require('os').platform()}'.`,
     /^(linux|darwin|win32|all)$/i,
     require('os').platform()
+  )
+  .option(
+    '-a --arch <arch>',
+    `Package destination architecture . Default to '${require('os').arch()}'.`,
+    /^(ia32, x64, arm, all)$/i,
+    require('os').arch()
   ).parse(process.argv)
 
 const packageOptions = {
@@ -20,7 +26,8 @@ const packageOptions = {
   prune: true,
   overwrite: true,
   platform: program.platform,
-  arch: 'x64',
+  //arch: program.arch
+  arch: 'arm'
 }
 
 packager(packageOptions, function (err, appPaths) {

@@ -54,14 +54,16 @@ webcam.on( 'error', function(err) {
 getDevicesMap(onDeviceMapCreated)
 
 function onDeviceMapCreated(err, res) {
-  console.log(res, err)
+  console.log(JSON.stringify(res), err)
   if (res[settings.device]) {
     let id = res[settings.device]
+    console.log('Selecting ' + settings.device + ' with id ' + id)
     let cameraOptions 
     cameraOptions = Object.assign({}, settings.cameraOptions)
     cameraOptions.constraints.optional = [{
       "sourceId": id
     }]
+    console.log(JSON.stringify(cameraOptions))
     webcam.set(cameraOptions)
   } else {
     console.error('there is no flux for : ', settings.device)

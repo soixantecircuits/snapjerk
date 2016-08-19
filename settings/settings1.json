@@ -1,4 +1,18 @@
 {
-  "device": "dev/video1",
-  "cameraNumber": 1
+  "device": "dev/video0",
+  "cameraNumber": 1,
+  "cameraOptions": {
+    "width": 1920,
+    "height": 1080,
+    "dest_width": 1920,
+    "dest_height": 1080,
+    "image_format": "jpeg",
+    "jpeg_quality": 90,
+    "constraints": {
+      "mandatory": {
+        "minWidth": 1920, 
+        "minHeight": 1080
+      }
+    }
+  }
 }
