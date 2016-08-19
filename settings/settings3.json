@@ -1,29 +1,4 @@
 {
-  "name": "Default settings file",
-  "file": "/tmp/camsync3.jpg",
+  "device": "dev/video3",
   "cameraNumber": 3,
-  "cameraOptions": {
-    "width": 1280,
-    "height": 720,
-    "dest_width": 1920,
-    "dest_height": 1080,
-    "image_format": "jpeg",
-    "jpeg_quality": 90,
-    "constraints": {
-      "mandatory": {
-        "minWidth": 1920, 
-        "minHeight": 1080
-      },
-      "optional": [{
-        "sourceId": "a2e157be7776d4b1f4046fbf86f926dbe6962350adee640720ccb48ef92a67e8"
-      }]
-    }
-  },
-  "spacebro": {
-    "server": {
-      "address": "localhost",
-      "port": 8888
-    },
-    "computer": "electronic-sheep-3"
-  }
 }

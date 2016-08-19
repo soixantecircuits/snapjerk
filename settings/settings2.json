@@ -1,29 +1,4 @@
 {
-  "name": "Default settings file",
+  "device": "dev/video2",
   "cameraNumber": 2,
-  "file": "/tmp/camsync2.jpg",
-  "cameraOptions": {
-    "width": 1280,
-    "height": 720,
-    "dest_width": 1920,
-    "dest_height": 1080,
-    "image_format": "jpeg",
-    "jpeg_quality": 90,
-    "constraints": {
-      "mandatory": {
-        "minWidth": 1920, 
-        "minHeight": 1080
-      },
-      "optional": [{
-        "sourceId": "0f409941e4297e8b19ab9fe7f52d138738f2457704090773209393796d307de4"
-      }]
-    }
-  },
-  "spacebro": {
-    "server": {
-      "address": "localhost",
-      "port": 8888
-    },
-    "computer": "electronic-sheep-2"
-  }
 }
