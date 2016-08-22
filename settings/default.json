@@ -1,6 +1,6 @@
 {
   "cameraPath": "/dev/video1",
-  "cameraNumber": 1,
+  "cameraNumber": "$hostname+0",
   "imageFolder": "/tmp/",
   "server": {
     "host": "",

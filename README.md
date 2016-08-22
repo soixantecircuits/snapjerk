@@ -76,9 +76,30 @@ To know the kernels of your camera, run
 udevadm info --name=/dev/video0 --attribute-walk | grep KERNELS
 ```
 
-### Camera settings
 
-A list of settings is available from any camera.
+### Camera numbering 
+
+In an array of many cameras, messages would all look the same in spacebro.
+If you need a numbering, you can use
+
+```
+  "cameraNumber": 3,
+```
+
+for camera number 3.
+
+In array of many computers, you may want to base the numbering on the computer's name, you can add a number at the end of the computer's hostname and use the setting as follow
+
+```
+  "cameraNumber": "$hostname+5",
+```
+
+The number of the computer should be at the end of the hostname.
+If the computer's hostname is `mycomputer3`, `thiscomputer-03`, the resulting camera number would be 8.
+
+## Camera settings
+
+A list of settings is available from any camera: autoexposure, autofocus, saturation, sharpness, ...
 In the future, they will me available in snapjerk.
 For now, you can use
 

@@ -7,6 +7,34 @@ import settings from 'src/lib/settings.js'
 const webcam = require('webcamjs')
 
 
+// init numbering
+if (settings.number === 'undefined' || settings.cameraNumber.indexOf('$hostname') !== -1 ) {
+
+  // get offset  in the form  $hostname+1, $hostname+10
+  let offset = 0
+  let re = /(\d+)$/i
+  let match = settings.cameraNumber.match(re)
+
+  if (match && match[1]) {
+    offset = parseInt(match[1])
+  }
+
+
+  // get hostname number in the form myname-01, myname1, ...
+  let hostname = os.hostname()
+  re = /(\d+)$/i
+  match = hostname.match(re)
+
+  if (match && match[1]) {
+    settings.cameraNumber = parseInt(match[1])
+  } else {
+    settings.cameraNumber = 1
+  }
+
+  settings.cameraNumber += offset
+  console.log("camera number: " + settings.cameraNumber)
+}
+
 const snap = function (data, callback) {
 	webcam.snap((dataURL) => {
     data.dataURL = dataURL
@@ -26,6 +54,7 @@ const snap = function (data, callback) {
 					number: settings.cameraNumber,
 					album_name: data.shortId || Math.random()*10000
 				}
+        console.log ('image-saved', msg)
 				spacebroClient.emit('image-saved', msg)
 			}
 		})

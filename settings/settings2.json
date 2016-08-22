@@ -1,6 +1,6 @@
 {
   "cameraKernels": "1-1.5",
-  "cameraNumber": 2,
+  "cameraNumber": "$hostname+1",
   "cameraOptions": {
     "width": 1920,
     "height": 1080,
