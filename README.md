@@ -15,14 +15,9 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# run
 # -t (or --target=) option is optionnal and override the default webpack target (https://webpack.github.io/docs/configuration.html#target)
 npm start [-- -t {target}] # or `npm run dev`
-
-# launch electron and open a window at localhost:8080
-# you must have run the `npm run dev` command in an other terminal window
-# -s option is optionnal is used to add settings over the default settings
-npm run electron [-- -s {settings}]
 
 # build for production with minifications and package the app.
 npm run build
@@ -41,6 +36,42 @@ npm run package:win32
 npm run package:all # All platforms, all architectures
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://soixantecircuits.github.io/nd/).
+For detailed explanation on how things work with neodymium, the stack used by snapjerk, checkout the [guide](http://soixantecircuits.github.io/nd/).
 
-:wq
+## Settings
+
+### Usage
+
+By default, `settings/default.json` is used.
+If you need a special setting, for example to select a camera, you can load the app with 
+
+```
+./releases/snapjerk-linux-x64/snapjerk -- -s settings/settings1.json
+```
+
+This works only with a packaged app for now. We are working on having this work with `npm start`.
+
+Applied settings via the commandline extends the default settings.
+If a setting exists in settings1.json, it will be used. 
+If a setting is not present in settings1.json, it will use the default one in default.json.
+
+### Select a camera
+
+You can select a camera by its linux path
+
+```
+"cameraPath": "/dev/video1", 
+```
+
+or by its kernels, which is the physical usb port identifier.
+This is useful if you have several instances of snapjerk running, each with the same model of camera.
+
+```
+  "cameraKernels": "1-1.3",
+```
+
+To know the kernels of your camera, run
+
+```
+udevadm info --name=/dev/video0 --attribute-walk | grep KERNELS
+```

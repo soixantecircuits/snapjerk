@@ -24,4 +24,4 @@ spacebroClient.registerToMaster(actionList, config.computer)
 setInterval(function () {
   let id = shortid.generate()
   spacebroClient.emit('shoot', {shortId: id})
-}, 2000)
+}, 20000)
