@@ -75,3 +75,26 @@ To know the kernels of your camera, run
 ```
 udevadm info --name=/dev/video0 --attribute-walk | grep KERNELS
 ```
+
+### Camera settings
+
+A list of settings is available from any camera.
+In the future, they will me available in snapjerk.
+For now, you can use
+
+1. guvcview: to tweak the settings
+2. uvcdynctrl: to save and load settings
+
+```
+# save
+/usr/bin/uvcdynctrl -W webcam_settings.gpfl --device video0
+# load
+/usr/bin/uvcdynctrl -L webcam_settings.gpfl --device video0
+```
+
+Some webcams lose settings on disconnect. To load settings at startup, edit a cron with `crontab -e` and add
+
+```
+@reboot sleep 15; /usr/bin/uvcdynctrl -L /path/to/webcam_settings.gpfl
+```
+
