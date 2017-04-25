@@ -4,11 +4,6 @@
 
 [![js-standard-style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
-
 ## Build Setup
 
 ``` bash
@@ -43,7 +38,7 @@ For detailed explanation on how things work with neodymium, the stack used by sn
 ### Usage
 
 By default, `settings/default.json` is used.
-If you need a special setting, for example to select a camera, you can load the app with 
+If you need a special setting, for example to select a camera, you can load the app with
 
 ```
 ./releases/snapjerk-linux-x64/snapjerk -- -s settings/settings1.json
@@ -52,7 +47,7 @@ If you need a special setting, for example to select a camera, you can load the 
 This works only with a packaged app for now. We are working on having this work with `npm start`.
 
 Applied settings via the commandline extends the default settings.
-If a setting exists in settings1.json, it will be used. 
+If a setting exists in settings1.json, it will be used.
 If a setting is not present in settings1.json, it will use the default one in default.json.
 
 ### Select a camera
@@ -60,7 +55,7 @@ If a setting is not present in settings1.json, it will use the default one in de
 You can select a camera by its linux path
 
 ```
-"cameraPath": "/dev/video1", 
+"cameraPath": "/dev/video1",
 ```
 
 or by its kernels, which is the physical usb port identifier.
@@ -77,7 +72,7 @@ udevadm info --name=/dev/video0 --attribute-walk | grep KERNELS
 ```
 
 
-### Camera numbering 
+### Camera numbering
 
 In an array of many cameras, messages would all look the same in spacebro.
 If you need a numbering, you can use
