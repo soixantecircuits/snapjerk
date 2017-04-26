@@ -2293,6 +2293,12 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+getusermedia@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/getusermedia/-/getusermedia-2.0.1.tgz#f81af9795bc5934649813f7d092dd65030b34655"
+  dependencies:
+    webrtc-adapter "^2.0.2"
+
 glob-base@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/glob-base/-/glob-base-0.3.0.tgz#dbb164f6221b1c0b1ccf82aea328b497df0ea3c4"
@@ -4070,6 +4076,10 @@ recast@~0.11.12:
     private "~0.1.5"
     source-map "~0.5.0"
 
+recordrtc@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/recordrtc/-/recordrtc-5.4.1.tgz#01202784ae2636dbd79ac42071c6593548c56c74"
+
 redent@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/redent/-/redent-1.0.0.tgz#cf916ab1fd5f1f16dfb20822dd6ec7f730c2afde"
@@ -4282,6 +4292,10 @@ safe-buffer@^5.0.1:
 sax@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
+
+sdp@^1.0.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/sdp/-/sdp-1.5.0.tgz#0838684787f25eb72eddc085224139616187113e"
 
 secure-keys@^1.0.0:
   version "1.0.0"
@@ -4970,6 +4984,12 @@ webpack@^2.2.1:
     watchpack "^1.3.1"
     webpack-sources "^0.2.3"
     yargs "^6.0.0"
+
+webrtc-adapter@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/webrtc-adapter/-/webrtc-adapter-2.1.0.tgz#612b5bc6ce8e73c9d0660038a21f9255a867bf3e"
+  dependencies:
+    sdp "^1.0.0"
 
 whet.extend@~0.9.9:
   version "0.9.9"

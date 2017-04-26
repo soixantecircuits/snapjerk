@@ -7,7 +7,8 @@
 <script>
 'use strict'
 
-var settings = require('electron').remote.getGlobal('settings') // Global variable set in mainProcess
+const settings = require('electron').remote.getGlobal('settings')
+const camera = require('./lib/camera')
 
 export default {
   data() {
