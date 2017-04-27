@@ -39,7 +39,9 @@ export default {
   mounted() {
     spacebroClient.on('record', (raw) => {
       try {
-        const { type, id } = JSON.parse(raw)
+        const { type, id } = typeof(raw) === 'object'
+          ? raw
+          : JSON.parse(raw)
         this.record(type, id)
       } catch (e) {
         console.warn(e)
