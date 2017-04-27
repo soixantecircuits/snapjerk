@@ -1,4 +1,14 @@
 {
+  "devices": {
+    "video": {
+      "label": "BRIO",
+      "width": 1920,
+      "height": 1080
+    },
+    "audio": {
+      "label": "built-in"
+    }
+  },
   "server": {
     "host" : "localhost",
     "port" : 9090

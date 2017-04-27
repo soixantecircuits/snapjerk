@@ -5,20 +5,7 @@ const getUserMedia = require('getUserMedia')
 
 let stream = null
 
-const options = {
-  devices: {
-    video: {
-      label: 'BRIO',
-      width: 1920,
-      height: 1080
-    },
-    audio: {
-      label: 'built-in'
-    }
-  }
-}
-
-function init (context) {
+function init (options, cb) {
   navigator.mediaDevices.enumerateDevices()
   .then(devices => devices.filter(device => {
     const kind = device.kind.replace(/input/i, '')
@@ -50,7 +37,7 @@ function init (context) {
         console.log(err)
       } else {
         stream = mediastream
-        context.$store.commit('camready', true)
+        typeof cb === 'function' && cb()
       }
     })
   })

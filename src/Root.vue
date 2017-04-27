@@ -23,7 +23,9 @@ export default {
         document.querySelector('video').srcObject = camera.getStream()
       }
     })
-    camera.init(this)
+    camera.init({ devices: settings.devices }, () => {
+        this.$store.commit('camready', true)
+    })
   }
 }
 </script>
