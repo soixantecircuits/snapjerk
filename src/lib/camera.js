@@ -2,10 +2,12 @@
 
 const _ = require('lodash')
 const getUserMedia = require('getUserMedia')
+const RecordRTC = require('recordrtc')
 
 let stream = null
+let recorder = null
 
-function init (options, cb) {
+function init (options, onStreamAvailable, onRecordEnded) {
   navigator.mediaDevices.enumerateDevices()
   .then(devices => devices.filter(device => {
     const kind = device.kind.replace(/input/i, '')
@@ -37,13 +39,33 @@ function init (options, cb) {
         console.log(err)
       } else {
         stream = mediastream
-        typeof cb === 'function' && cb()
+
+        recorder = RecordRTC(stream, {
+          type: 'video',
+          mimeType: 'video/mp4',
+          frameInterval: (1000 / options.recording.fps)
+        })
+
+        recorder
+          .setRecordingDuration(options.recording.duration * 1000)
+          .onRecordingStopped(blobURL => {
+            const blob = recorder.getBlob()
+            const dataURL = recorder.getDataURL(dataURL => dataURL)
+            typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob, dataURL)
+          })
+
+        typeof onStreamAvailable === 'function' && onStreamAvailable()
       }
     })
   })
 }
 
+function record () {
+  recorder.startRecording()
+}
+
 module.exports = {
   init,
+  record,
   getStream: () => stream
 }

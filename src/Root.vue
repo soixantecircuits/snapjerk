@@ -1,7 +1,8 @@
 <template>
   <div class="root">
     <h1>snapjerk</h1>
-    <video autoplay muted></video>
+    <button @click="record" :disabled="recording">record</button>
+    <video id="preview" autoplay muted></video>
   </div>
 </template>
 
@@ -10,21 +11,34 @@
 
 const settings = require('electron').remote.getGlobal('settings')
 const camera = require('./lib/camera')
+const { mapState } = require('vuex')
 
 export default {
   data() {
-    return {
-      stream: null
+    return {}
+  },
+  computed: {
+    ...mapState([ 'camready', 'recording' ])
+  },
+  methods: {
+    record () {
+      this.$store.commit('recording', true)
+      camera.record()
     }
   },
   mounted() {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'camready' && mutation.payload === true) {
-        document.querySelector('video').srcObject = camera.getStream()
+        document.querySelector('#preview').srcObject = camera.getStream()
       }
     })
-    camera.init({ devices: settings.devices }, () => {
+    camera.init({
+      recording: settings.recording,
+      devices: settings.devices
+    }, () => { // onStreamAvailable
         this.$store.commit('camready', true)
+    }, (blobURL, blob, dataURL) => { // onRecordEnded
+      this.$store.commit('recording', false)
     })
   }
 }
