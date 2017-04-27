@@ -4,10 +4,14 @@
 
 [![js-standard-style](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
+## Usage
+
+snapjerk is meant to be used with [spacebro](https://github.com/spacebro/spacebro).
+
+It listen and emits the following events:
+
+* receive: `record '{"type": "image|video|GIF", "id": 12345}'`
+* emits: `record-ended '{ "id": 12345 }'`
 
 ## Build Setup
 

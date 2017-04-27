@@ -31,13 +31,20 @@ export default {
     ...mapState([ 'camready', 'recording' ])
   },
   methods: {
-    record (type) {
+    record (type, id=Date.now()) {
       this.$store.commit('recording', true)
-      camera.record(type)
+      camera.record(type, id)
     }
   },
   mounted() {
-    spacebroClient.on('record', this.record)
+    spacebroClient.on('record', (raw) => {
+      try {
+        const { type, id } = JSON.parse(raw)
+        this.record(type, id)
+      } catch (e) {
+        console.warn(e)
+      }
+    })
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'camready' && mutation.payload === true) {
         const video = document.querySelector('#preview')
@@ -48,10 +55,9 @@ export default {
     })
     camera.init(() => { // onStreamAvailable
       this.$store.commit('camready', true)
-    }, (blobURL, blob) => { // onRecordEnded
+    }, (id) => { // onRecordEnded
       this.$store.commit('recording', false)
-      window.open(blobURL)
-      spacebroClient.emit('record-ended')
+      spacebroClient.emit('record-ended', { id })
     })
   },
   destroy() {
