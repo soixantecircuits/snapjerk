@@ -47,7 +47,7 @@ export default {
       }
     })
     camera.init(() => { // onStreamAvailable
-        this.$store.commit('camready', true)
+      this.$store.commit('camready', true)
     }, (blobURL, blob) => { // onRecordEnded
       this.$store.commit('recording', false)
       window.open(blobURL)
