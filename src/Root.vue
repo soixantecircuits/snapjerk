@@ -3,6 +3,7 @@
     <h1>snapjerk</h1>
     <button @click="record('image')" :disabled="recording">record image</button>
     <button @click="record('video')" :disabled="recording">record video</button>
+    <button @click="record('GIF')" :disabled="recording">record GIF</button>
     <video id="preview" autoplay muted></video>
   </div>
 </template>

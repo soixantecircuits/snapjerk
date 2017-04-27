@@ -11,7 +11,9 @@
   },
   "recording": {
     "fps": 30,
-    "duration": 5
+    "duration": 5,
+    "durationGIF": 3,
+    "framerateGIF": 2
   },
   "server": {
     "host" : "localhost",

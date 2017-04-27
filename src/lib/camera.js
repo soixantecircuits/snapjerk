@@ -7,8 +7,9 @@ const RecordRTC = require('recordrtc')
 const settings = require('electron').remote.getGlobal('settings')
 
 let stream = null
-let videorecorder = null
 let imagerecorder = { shoot: () => {} }
+let videorecorder = null
+let GIFrecorder = null
 
 function init (onStreamAvailable, onRecordEnded) {
   navigator.mediaDevices.enumerateDevices()
@@ -77,6 +78,17 @@ function init (onStreamAvailable, onRecordEnded) {
             typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob)
           })
 
+        GIFrecorder = RecordRTC(stream, {
+          type: 'gif',
+          frameRate: settings.recording.framerateGIF
+        })
+        GIFrecorder
+          .setRecordingDuration(settings.recording.durationGIF * 1000)
+          .onRecordingStopped(blobURL => {
+            const blob = GIFrecorder.getBlob()
+            typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob)
+          })
+
         typeof onStreamAvailable === 'function' && onStreamAvailable()
       }
     })
@@ -86,6 +98,7 @@ function init (onStreamAvailable, onRecordEnded) {
 function record (type) {
   type === 'image' && imagerecorder.shoot()
   type === 'video' && videorecorder.startRecording()
+  type === 'GIF' && GIFrecorder.startRecording()
 }
 
 function clear () {
