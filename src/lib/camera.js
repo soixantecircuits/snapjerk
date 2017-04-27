@@ -120,9 +120,9 @@ function record (type, id) {
   console.log(`recording ${type} with ${id}`)
   if (id !== currentID) {
     currentID = id
-    type === 'image' && imagerecorder.shoot()
-    type === 'video' && videorecorder.startRecording()
-    type === 'GIF' && GIFrecorder.startRecording()
+    ;/^image$/i.test(type) && imagerecorder.shoot()
+    ;/^video$/i.test(type) && videorecorder.startRecording()
+    ;/^GIF$/i.test(type) && GIFrecorder.startRecording()
   } else {
     console.log(`record with id ${id} seem to already exists. Skipping.`)
   }
