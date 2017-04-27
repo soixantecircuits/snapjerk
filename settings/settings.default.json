@@ -41,10 +41,10 @@
       "port" : 6060
     },
     "spacebro": {
-      "host" : "spacebro-ip",
+      "host" : "127.0.0.1",
       "port" : 8888,
-      "channel": "my-channel",
-      "client" : "my-app",
+      "channel": "",
+      "client" : "snapjerk",
       "inputMessage": "my-input-msg",
       "outputMessage": "my-output-msg"
     }

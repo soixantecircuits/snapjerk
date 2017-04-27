@@ -14,6 +14,14 @@
 const settings = require('electron').remote.getGlobal('settings')
 const camera = require('./lib/camera')
 const { mapState } = require('vuex')
+const spacebroClient = require('spacebro-client')
+
+spacebroClient.connect(settings.service.spacebro.host, settings.service.spacebro.port,
+  {
+    clientName: settings.service.spacebro.client,
+    channelName: settings.service.spacebro.channel
+  }
+)
 
 export default {
   data() {
@@ -29,6 +37,7 @@ export default {
     }
   },
   mounted() {
+    spacebroClient.on('record', this.record)
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'camready' && mutation.payload === true) {
         const video = document.querySelector('#preview')
@@ -42,7 +51,11 @@ export default {
     }, (blobURL, blob) => { // onRecordEnded
       this.$store.commit('recording', false)
       window.open(blobURL)
+      spacebroClient.emit('record-ended')
     })
+  },
+  destroy() {
+    spacebroClient.off('record', this.record)
   }
 }
 </script>
