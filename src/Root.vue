@@ -1,6 +1,7 @@
 <template>
   <div class="root">
     <h1>snapjerk</h1>
+    <video autoplay muted></video>
   </div>
 </template>
 
@@ -12,15 +13,24 @@ const camera = require('./lib/camera')
 
 export default {
   data() {
-    return {}
+    return {
+      stream: null
+    }
   },
   mounted() {
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'camready' && mutation.payload === true) {
+        document.querySelector('video').srcObject = camera.getStream()
+      }
+    })
+    camera.init(this)
   }
 }
 </script>
-<style>
-html {
-  height: 100%;
-  font-family: sans-serif;
+<style src="./assets/styles/main.scss"></style>
+<style scoped>
+video {
+  width: 100vw;
+  height: 100vh;
 }
 </style>
