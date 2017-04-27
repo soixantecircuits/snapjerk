@@ -4,14 +4,17 @@ const _ = require('lodash')
 const getUserMedia = require('getUserMedia')
 const RecordRTC = require('recordrtc')
 
-let stream = null
-let recorder = null
+const settings = require('electron').remote.getGlobal('settings')
 
-function init (options, onStreamAvailable, onRecordEnded) {
+let stream = null
+let videorecorder = null
+let imagerecorder = { shoot: () => {} }
+
+function init (onStreamAvailable, onRecordEnded) {
   navigator.mediaDevices.enumerateDevices()
   .then(devices => devices.filter(device => {
     const kind = device.kind.replace(/input/i, '')
-    const label = options.devices[kind] ? options.devices[kind].label : null
+    const label = settings.devices[kind] ? settings.devices[kind].label : null
     return new RegExp(label, 'i').test(device.label)
   }))
   .then(devices => {
@@ -26,8 +29,8 @@ function init (options, onStreamAvailable, onRecordEnded) {
         deviceId: {
           exact: videoID
         },
-        width: options.devices.video.width,
-        height: options.devices.video.height
+        width: settings.devices.video.width,
+        height: settings.devices.video.height
       },
       audio: {
         deviceId: {
@@ -40,18 +43,38 @@ function init (options, onStreamAvailable, onRecordEnded) {
       } else {
         stream = mediastream
 
-        recorder = RecordRTC(stream, {
+        imagerecorder.shoot = () => {
+          const video = document.querySelector('#preview')
+          try {
+            const canvas = document.createElement('canvas')
+            canvas.width = settings.devices.video.width
+            canvas.height = settings.devices.video.height
+            document.body.appendChild(canvas)
+            canvas.style.display = 'none'
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+            setTimeout(() => {
+              canvas.toBlob((blob) => {
+                const blobURL = window.URL.createObjectURL(blob)
+                typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob)
+                canvas.remove()
+              }, 'image/png', 0.95)
+            }, 0)
+          } catch (e) {
+            console.warn(e)
+            typeof onRecordEnded === 'function' && onRecordEnded(null, null, null)
+          }
+        }
+
+        videorecorder = RecordRTC(stream, {
           type: 'video',
           mimeType: 'video/mp4',
-          frameInterval: (1000 / options.recording.fps)
+          frameInterval: (1000 / settings.recording.fps)
         })
-
-        recorder
-          .setRecordingDuration(options.recording.duration * 1000)
+        videorecorder
+          .setRecordingDuration(settings.recording.duration * 1000)
           .onRecordingStopped(blobURL => {
-            const blob = recorder.getBlob()
-            const dataURL = recorder.getDataURL(dataURL => dataURL)
-            typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob, dataURL)
+            const blob = videorecorder.getBlob()
+            typeof onRecordEnded === 'function' && onRecordEnded(blobURL, blob)
           })
 
         typeof onStreamAvailable === 'function' && onStreamAvailable()
@@ -60,12 +83,18 @@ function init (options, onStreamAvailable, onRecordEnded) {
   })
 }
 
-function record () {
-  recorder.startRecording()
+function record (type) {
+  type === 'image' && imagerecorder.shoot()
+  type === 'video' && videorecorder.startRecording()
+}
+
+function clear () {
+  videorecorder.clearRecordedData()
 }
 
 module.exports = {
   init,
   record,
+  clear,
   getStream: () => stream
 }

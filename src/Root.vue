@@ -1,7 +1,8 @@
 <template>
   <div class="root">
     <h1>snapjerk</h1>
-    <button @click="record" :disabled="recording">record</button>
+    <button @click="record('image')" :disabled="recording">record image</button>
+    <button @click="record('video')" :disabled="recording">record video</button>
     <video id="preview" autoplay muted></video>
   </div>
 </template>
@@ -21,32 +22,32 @@ export default {
     ...mapState([ 'camready', 'recording' ])
   },
   methods: {
-    record () {
+    record (type) {
       this.$store.commit('recording', true)
-      camera.record()
+      camera.record(type)
     }
   },
   mounted() {
     this.$store.subscribe((mutation, state) => {
       if (mutation.type === 'camready' && mutation.payload === true) {
-        document.querySelector('#preview').srcObject = camera.getStream()
+        const video = document.querySelector('#preview')
+        video.width = settings.devices.video.width
+        video.height = settings.devices.video.height
+        video.srcObject = camera.getStream()
       }
     })
-    camera.init({
-      recording: settings.recording,
-      devices: settings.devices
-    }, () => { // onStreamAvailable
+    camera.init(() => { // onStreamAvailable
         this.$store.commit('camready', true)
-    }, (blobURL, blob, dataURL) => { // onRecordEnded
+    }, (blobURL, blob) => { // onRecordEnded
       this.$store.commit('recording', false)
+      window.open(blobURL)
     })
   }
 }
 </script>
 <style src="./assets/styles/main.scss"></style>
 <style scoped>
-video {
-  width: 100vw;
-  height: 100vh;
-}
+/*
+ *
+ */
 </style>
