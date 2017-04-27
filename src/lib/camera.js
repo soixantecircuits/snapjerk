@@ -46,7 +46,7 @@ function init (onStreamAvailable, onRecordEnded) {
       } else {
         stream = mediastream
 
-        const onStop = function (id, blob, type) {
+        const onStop = function (id, blob, type, callback) {
           const ext = type === 'video'
             ? 'webm'
             : type === 'GIF'
@@ -61,7 +61,7 @@ function init (onStreamAvailable, onRecordEnded) {
               if (err) {
                 throw err
               } else {
-                window.open(`file://${filepath}`)
+                typeof callback === 'function' && callback(currentID, filepath)
                 console.log(filepath)
               }
             })
@@ -79,14 +79,11 @@ function init (onStreamAvailable, onRecordEnded) {
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
             setTimeout(() => {
               canvas.toBlob((blob) => {
-                onStop(currentID, blob, 'image')
-                typeof onRecordEnded === 'function' && onRecordEnded(currentID)
+                onStop(currentID, blob, 'image', onRecordEnded)
                 canvas.remove()
               }, 'image/png', 0.95)
             }, 0)
           } catch (e) {
-            console.warn(e)
-            typeof onRecordEnded === 'function' && onRecordEnded(null, null, null)
           }
         }
 
@@ -99,8 +96,7 @@ function init (onStreamAvailable, onRecordEnded) {
           .setRecordingDuration(settings.recording.duration * 1000)
           .onRecordingStopped(blobURL => {
             const blob = videorecorder.getBlob()
-            onStop(currentID, blob, 'video')
-            typeof onRecordEnded === 'function' && onRecordEnded(currentID)
+            onStop(currentID, blob, 'video', onRecordEnded)
           })
 
         GIFrecorder = RecordRTC(stream, {
@@ -111,8 +107,7 @@ function init (onStreamAvailable, onRecordEnded) {
           .setRecordingDuration(settings.recording.durationGIF * 1000)
           .onRecordingStopped(blobURL => {
             const blob = GIFrecorder.getBlob()
-            onStop(currentID, blob, 'GIF')
-            typeof onRecordEnded === 'function' && onRecordEnded(currentID)
+            onStop(currentID, blob, 'GIF', onRecordEnded)
           })
 
         typeof onStreamAvailable === 'function' && onStreamAvailable()

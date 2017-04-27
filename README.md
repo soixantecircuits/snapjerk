@@ -11,7 +11,7 @@ snapjerk is meant to be used with [spacebro](https://github.com/spacebro/spacebr
 It listen and emits the following events:
 
 * receive: `record '{"type": "image|video|GIF", "id": 12345}'`
-* emits: `record-ended '{ "id": 12345 }'`
+* emits: `record-ended '{ "id": 12345, "filepath": "/path/to/record.ext" }'`
 
 ## Build Setup
 

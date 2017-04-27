@@ -57,9 +57,9 @@ export default {
     })
     camera.init(() => { // onStreamAvailable
       this.$store.commit('camready', true)
-    }, (id) => { // onRecordEnded
+    }, (id, filepath) => { // onRecordEnded
       this.$store.commit('recording', false)
-      spacebroClient.emit('record-ended', { id })
+      spacebroClient.emit('record-ended', { id, filepath })
     })
   },
   destroy() {
