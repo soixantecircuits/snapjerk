@@ -1,10 +1,12 @@
 <template>
   <div class="root">
-    <h1>snapjerk</h1>
-    <button @click="record('image')" :disabled="recording">record image</button>
-    <button @click="record('video')" :disabled="recording">record video</button>
-    <button @click="record('GIF')" :disabled="recording">record GIF</button>
-    <video id="preview" autoplay muted></video>
+    <div class="overlay" @click="removeOverlay"></div>
+    <div class="recorder" @click="setOverlay">
+<!--       <button @click="record('image')" :disabled="recording">record image</button>
+      <button @click="record('video')" :disabled="recording">record video</button>
+      <button @click="record('GIF')" :disabled="recording">record GIF</button> -->
+      <video id="preview" autoplay muted></video>
+    </div>
   </div>
 </template>
 
@@ -34,9 +36,38 @@ export default {
     record (type, id=Date.now()) {
       this.$store.commit('recording', true)
       camera.record(type, id)
+    },
+    setOverlay () {
+      TweenMax.to('.recorder', 0.8, {
+        opacity: 0,
+        top: 1080,
+        ease: Power2.easeIn
+      })
+      TweenMax.to('.overlay', 0.8, {
+        opacity: 1,
+        top: 0,
+        delay: 0.05,
+        ease: Power2.easeOut
+      })
+    },
+    removeOverlay () {
+      TweenMax.to('.overlay', 0.8, {
+        opacity: 0,
+        top: -1080,
+        ease: Power2.easeIn
+      })
+      TweenMax.to('.recorder', 0.8, {
+        opacity: 1,
+        top: 0,
+        delay: 0.05,
+        ease: Power2.easeOut
+      })
     }
   },
   mounted() {
+    this.setOverlay()
+    spacebroClient.on('new-session', this.removeOverlay)
+    spacebroClient.on('end-session', this.setOverlay)
     spacebroClient.on('record', (raw) => {
       try {
         const { type, id } = typeof(raw) === 'object'
@@ -68,8 +99,27 @@ export default {
 }
 </script>
 <style src="./assets/styles/main.scss"></style>
-<style scoped>
-/*
- *
- */
+<style lang="scss" scoped>
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background: url(./assets/images/snapjerk.jpg) center no-repeat;
+  background-size: cover;
+}
+.recorder {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+}
 </style>

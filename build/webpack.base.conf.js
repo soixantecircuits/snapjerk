@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const utils = require('./utils')
 const projectRoot = path.resolve(__dirname, '../')
 
-
 const program = require('commander')
 program
   .option('-t, --target [value]', 'bundle target.')
@@ -17,7 +16,7 @@ module.exports = {
   output: {
     path: '/',
     // this causes absolute path in builds, which makes them non-distribuable on an other machine
-    //publicPath: config.build.assetsPublicPath,
+    // publicPath: config.build.assetsPublicPath,
     filename: '[name].js'
   },
   target: program.target || 'electron-renderer',
