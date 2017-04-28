@@ -9,6 +9,7 @@ const settings = require('electron').remote.getGlobal('settings')
 let stream = null
 let imagerecorder = { shoot: () => {} }
 let videorecorder = null
+let audiorecorder = null
 let GIFrecorder = null
 
 let currentID = 0
@@ -51,8 +52,10 @@ function init (onStreamAvailable, onRecordEnded) {
             ? 'webm'
             : type === 'GIF'
               ? 'gif'
-              : 'png'
-          const filepath = `/tmp/${id}.${ext}`
+              : type === 'audio'
+                ? 'ogg'
+                : 'png'
+          const filepath = `/tmp/snaps/${id}.${ext}`
           const reader = new window.FileReader()
           reader.readAsArrayBuffer(blob)
           reader.addEventListener('load', () => {
@@ -89,7 +92,7 @@ function init (onStreamAvailable, onRecordEnded) {
 
         videorecorder = RecordRTC(stream, {
           type: 'video',
-          mimeType: 'video/mp4',
+          mimeType: 'video/webm',
           frameInterval: (1000 / settings.recording.fps)
         })
         videorecorder
@@ -98,6 +101,20 @@ function init (onStreamAvailable, onRecordEnded) {
             const blob = videorecorder.getBlob()
             onStop(currentID, blob, 'video', onRecordEnded)
           })
+
+        audiorecorder = RecordRTC(stream, {
+          type: 'audio',
+          mimeType: 'audio/ogg',
+          bitsPerSecond: 128000
+        })
+        audiorecorder
+          .setRecordingDuration(settings.recording.durationVideo * 1000)
+          .onRecordingStopped(blobURL => {
+            const blob = audiorecorder.getBlob()
+            onStop(currentID, blob, 'audio', onRecordEnded)
+          })
+
+        // ffmpeg -i video.webm -i audio.ogg -qscale 0 output.mp4
 
         GIFrecorder = RecordRTC(stream, {
           type: 'gif',
@@ -122,6 +139,7 @@ function record (type, id) {
     currentID = id
     ;/^image$/i.test(type) && imagerecorder.shoot()
     ;/^video$/i.test(type) && videorecorder.startRecording()
+    ;/^video$/i.test(type) && audiorecorder.startRecording()
     ;/^GIF$/i.test(type) && GIFrecorder.startRecording()
   } else {
     console.log(`record with id ${id} seem to already exists. Skipping.`)
