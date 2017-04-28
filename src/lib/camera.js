@@ -1,7 +1,7 @@
 'use strict'
 
 const _ = require('lodash')
-const getUserMedia = require('getUserMedia')
+const getUserMedia = require('getusermedia')
 const RecordRTC = require('recordrtc')
 
 const settings = require('electron').remote.getGlobal('settings')
