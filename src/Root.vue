@@ -1,11 +1,13 @@
 <template>
   <div class="root">
     <div class="overlay" @click="removeOverlay"></div>
-    <div class="recorder" @click="setOverlay">
-<!--       <button @click="record('image')" :disabled="recording">record image</button>
-      <button @click="record('video')" :disabled="recording">record video</button>
-      <button @click="record('GIF')" :disabled="recording">record GIF</button> -->
-      <video id="preview" autoplay muted></video>
+    <div class="recorder">
+      <div class="controls">
+        <button @click="record('image')" :disabled="recording">🖼</button>
+        <button @click="record('video')" :disabled="recording">🎥</button>
+        <button @click="record('GIF')" :disabled="recording">🎞</button>
+      </div>
+      <video id="preview" autoplay muted @click="setOverlay"></video>
     </div>
   </div>
 </template>
@@ -121,5 +123,27 @@ export default {
   z-index: 5;
   width: 100vw;
   height: 100vh;
+}
+.controls {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 6;
+  margin: 2em auto;
+  text-align: center;
+  button {
+    font-size: 2em;
+    padding: 1em;
+    margin: 0 1em;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    transition: all .3s ease;
+    &:hover, &:active {
+      opacity: 0.5;
+    }
+  }
 }
 </style>
