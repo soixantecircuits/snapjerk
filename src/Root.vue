@@ -1,13 +1,13 @@
 <template>
   <div class="root">
     <div class="overlay" @click="removeOverlay"></div>
-    <div class="recorder">
+    <div class="recorder" @click="setOverlay">
       <div class="controls">
-        <button @click="record('image')" :disabled="recording">🖼</button>
-        <button @click="record('video')" :disabled="recording">🎥</button>
-        <button @click="record('GIF')" :disabled="recording">🎞</button>
+        <button @click.stop="record('image')" :disabled="recording">🖼</button>
+        <button @click.stop="record('video')" :disabled="recording">🎥</button>
+        <button @click.stop="record('GIF')" :disabled="recording">🎞</button>
       </div>
-      <video id="preview" autoplay muted @click="setOverlay"></video>
+      <video id="preview" autoplay muted></video>
     </div>
   </div>
 </template>
