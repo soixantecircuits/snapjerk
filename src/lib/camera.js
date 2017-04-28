@@ -55,7 +55,7 @@ function init (onStreamAvailable, onRecordEnded) {
               : type === 'audio'
                 ? 'ogg'
                 : 'png'
-          const filepath = `/tmp/snaps/${id}.${ext}`
+          const filepath = `/tmp/${id}.${ext}`
           const reader = new window.FileReader()
           reader.readAsArrayBuffer(blob)
           reader.addEventListener('load', () => {
