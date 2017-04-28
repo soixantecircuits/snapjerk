@@ -17,6 +17,7 @@ let currentID = 0
 function init (onStreamAvailable, onRecordEnded) {
   navigator.mediaDevices.enumerateDevices()
   .then(devices => devices.filter(device => {
+    console.log(device)
     const kind = device.kind.replace(/input/i, '')
     const label = settings.devices[kind] ? settings.devices[kind].label : null
     return new RegExp(label, 'i').test(device.label)
