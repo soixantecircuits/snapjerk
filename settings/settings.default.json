@@ -11,7 +11,7 @@
   },
   "recording": {
     "fps": 30,
-    "duration": 5,
+    "durationVideo": 5,
     "durationGIF": 3,
     "framerateGIF": 2
   },

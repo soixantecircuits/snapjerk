@@ -93,7 +93,7 @@ function init (onStreamAvailable, onRecordEnded) {
           frameInterval: (1000 / settings.recording.fps)
         })
         videorecorder
-          .setRecordingDuration(settings.recording.duration * 1000)
+          .setRecordingDuration(settings.recording.durationVideo * 1000)
           .onRecordingStopped(blobURL => {
             const blob = videorecorder.getBlob()
             onStop(currentID, blob, 'video', onRecordEnded)
