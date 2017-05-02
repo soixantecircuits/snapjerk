@@ -19,7 +19,15 @@ function init (onStreamAvailable, onRecordEnded) {
   .then(devices => devices.filter(device => {
     console.log(device)
     const kind = device.kind.replace(/input/i, '')
-    const label = settings.devices[kind] ? settings.devices[kind].label : null
+    let label = settings.devices[kind] ? settings.devices[kind].label : null
+    if (label) {
+      /* eslint-disable no-useless-escape */
+      label = label.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+      if (settings.devices[kind]['exact-label']) {
+        label = ('^' + label)
+        label += '$'
+      }
+    }
     return new RegExp(label, 'i').test(device.label)
   }))
   .then(devices => {

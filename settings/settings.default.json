@@ -1,7 +1,8 @@
 {
   "devices": {
     "video": {
-      "label": "BRIO",
+      "label": "Logitech BRIO #2 (046d:085e)",
+      "exact-label": true,
       "width": 1920,
       "height": 1080
     },
