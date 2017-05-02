@@ -42,14 +42,8 @@ function init (onStreamAvailable, onRecordEnded) {
         deviceId: {
           exact: videoID
         },
-        mandatory: {
-          maxWidth: settings.devices.video.width,
-          minWidth: settings.devices.video.width,
-          maxHeight: settings.devices.video.height,
-          minHeight: settings.devices.video.height,
-          minFrameRate: settings.recording.fps,
-          maxFrameRate: settings.recording.fps
-        }
+        width: settings.devices.video.width,
+        height: settings.devices.video.height
       },
       audio: {
         deviceId: {
