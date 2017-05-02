@@ -3,13 +3,13 @@
 const _ = require('lodash')
 const getUserMedia = require('getusermedia')
 const RecordRTC = require('recordrtc')
+const MediaStreamRecorder = RecordRTC.MediaStreamRecorder
 
 const settings = require('electron').remote.getGlobal('settings')
 
 let stream = null
 let imagerecorder = { shoot: () => {} }
 let videorecorder = null
-let audiorecorder = null
 let GIFrecorder = null
 
 let currentID = 0
@@ -34,8 +34,14 @@ function init (onStreamAvailable, onRecordEnded) {
         deviceId: {
           exact: videoID
         },
-        width: settings.devices.video.width,
-        height: settings.devices.video.height
+        mandatory: {
+          maxWidth: settings.devices.video.width,
+          minWidth: settings.devices.video.width,
+          maxHeight: settings.devices.video.height,
+          minHeight: settings.devices.video.height,
+          minFrameRate: settings.recording.fps,
+          maxFrameRate: settings.recording.fps
+        }
       },
       audio: {
         deviceId: {
@@ -94,7 +100,7 @@ function init (onStreamAvailable, onRecordEnded) {
         videorecorder = RecordRTC(stream, {
           type: 'video',
           mimeType: 'video/webm',
-          frameInterval: (1000 / settings.recording.fps)
+          recorderType: MediaStreamRecorder
         })
         videorecorder
           .setRecordingDuration(settings.recording.durationVideo * 1000)
@@ -102,20 +108,6 @@ function init (onStreamAvailable, onRecordEnded) {
             const blob = videorecorder.getBlob()
             onStop(currentID, blob, 'video', onRecordEnded)
           })
-
-        audiorecorder = RecordRTC(stream, {
-          type: 'audio',
-          mimeType: 'audio/ogg',
-          bitsPerSecond: 128000
-        })
-        audiorecorder
-          .setRecordingDuration(settings.recording.durationVideo * 1000)
-          .onRecordingStopped(blobURL => {
-            const blob = audiorecorder.getBlob()
-            onStop(currentID, blob, 'audio', onRecordEnded)
-          })
-
-        // ffmpeg -i video.webm -i audio.ogg -qscale 0 output.mp4
 
         GIFrecorder = RecordRTC(stream, {
           type: 'gif',
@@ -140,7 +132,6 @@ function record (type, id) {
     currentID = id
     ;/^image$/i.test(type) && imagerecorder.shoot()
     ;/^video$/i.test(type) && videorecorder.startRecording()
-    ;/^video$/i.test(type) && audiorecorder.startRecording()
     ;/^GIF$/i.test(type) && GIFrecorder.startRecording()
   } else {
     console.log(`record with id ${id} seem to already exists. Skipping.`)
